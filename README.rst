@@ -34,7 +34,7 @@ Examples
 
 ::
 
-    $ fetchfiling -t contributions -s 580604  # Texans for Rick Perry's July Semiannual
+    $ fetchfiling -s -t contributions 580604  # Texans for Rick Perry's July Semiannual
 
     ..
 
@@ -63,7 +63,7 @@ The filing fetcher outputs to stdout – if you need to save it, direct it into 
 
 ::
 
-    fetchfiling -t contributions -s 580604 > texans_for_rick_perry_july13.csv
+    fetchfiling -s -t contributions 580604 > texans_for_rick_perry_july13.csv
 
 But wait... where do I get those IDs?
 -------------------------------------
