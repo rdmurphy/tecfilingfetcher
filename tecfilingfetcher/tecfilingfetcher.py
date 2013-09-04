@@ -14,9 +14,11 @@ def prepare_rows(page):
     return csv.reader(page)
 
 
-def get_data(filing_id, type, basic=False):
+def get_data(filing_id, type, basic=False, cli=False):
     page = fetch_page(filing_id)
     rows = prepare_rows(page)
+
+    row_list = []
 
     header_row = settings[type]['full_pull']['header']
     indexes = settings[type]['full_pull']['indexes']
@@ -26,17 +28,22 @@ def get_data(filing_id, type, basic=False):
         header_row = settings[type]['basic_pull']['header']
         indexes = settings[type]['basic_pull']['indexes']
 
-    write_to = csv.writer(sys.stdout)
-    write_to.writerow(header_row)
-
     for row in rows:
         if not row:
             continue
 
         if row[0] == type_code:
             row = [row[x] for x in indexes]
+            row_list.append(row)
 
+    if cli:
+        write_to = csv.writer(sys.stdout)
+        write_to.writerow(header_row)
+
+        for row in row_list:
             write_to.writerow(row)
+    else:
+        return [dict(zip(header_row, x)) for x in row_list]
 
 
 def main():
@@ -56,7 +63,7 @@ def main():
 
     basic_status = args.simple
 
-    get_data(args.filing_id, args.type, basic_status)
+    get_data(args.filing_id, args.type, basic_status, True)
 
 
 if __name__ == '__main__':
