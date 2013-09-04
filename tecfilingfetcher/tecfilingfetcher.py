@@ -43,10 +43,10 @@ def main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('filing_id', help='TEC filing ID')
-    parser.add_argument("-t", "--type",
-                        help="The type of data you want to get",
+    parser.add_argument('-t', '--type',
+                        help='The type of data you want to get',
                         choices=['contributions', 'expenditures'])
-    parser.add_argument("-s", "--simple",
+    parser.add_argument('-s', '--simple',
                         help='Return just the basic fields, good if you just want numbers',
                         action='store_true')
     args = parser.parse_args()
