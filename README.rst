@@ -66,7 +66,7 @@ The filing fetcher outputs to stdout – if you need to save it, direct it into 
 
     fetchfiling -s -t contributions 580604 > texans_for_rick_perry_july13.csv
 
-You can now fetch multiple reports in one swoop by passing in space-separated filing IDs. You should probably only do this if you are **fetching multiple reports for the same filer**. The reports themselves do not identify which row belongs to which filer, so make sure all of your IDs refer to the same filer.
+You can now fetch multiple reports in one swoop by passing in space-separated filing IDs. You should probably only do this if you are **fetching multiple reports for the same filer**. The reports themselves do not identify which row belongs to which filer, so make sure all of your IDs refer to the same one!
 
 ::
 
