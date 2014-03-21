@@ -17,16 +17,17 @@ Pretty straightforward:
 
 ::
 
-    usage: fetchfiling [-h] [-t {contributions,expenditures}] [-s] filing_id
+    usage: fetchfiling [-h] [-t {contributions,expenditures}] [-s]
+                       filing_id [filing_id ...]
 
     positional arguments:
-      filing_id             TEC filing ID
+      filing_id             The TEC filing ID(s) to fetch
 
     optional arguments:
       -h, --help            show this help message and exit
       -t {contributions,expenditures}, --type {contributions,expenditures}
                             The type of data you want to get
-      -s, --simple          Return just the basic fields, good if you just want
+      -s, --simple          Returns only basic fields, good if you only want
                             numbers
 
 Examples
@@ -34,7 +35,7 @@ Examples
 
 ::
 
-    $ fetchfiling -s -t contributions 580604  # Texans for Rick Perry's July Semiannual
+    $ fetchfiling -s -t contributions 580604  # Texans for Rick Perry's July 2013 Semiannual
 
     ..
 
@@ -65,7 +66,13 @@ The filing fetcher outputs to stdout – if you need to save it, direct it into 
 
     fetchfiling -s -t contributions 580604 > texans_for_rick_perry_july13.csv
 
+You can now fetch multiple reports in one swoop by passing in space-separated filing IDs. You should probably only do this if you are **fetching multiple reports for the same filer**. The reports themselves do not identify which row belongs to which filer, so make sure all of your IDs refer to the same one!
+
+::
+
+    $ fetchfiling -s -t contributions 580604 599270  # Texans for Rick Perry's July 2013 Semiannual + January 2014 Semiannual
+
 But wait... where do I get those IDs?
 -------------------------------------
 
-The `Texas Ethics Commission <http://www.ethics.state.tx.us/index.html>`_, via the `campaign finance search form <http://www.ethics.state.tx.us/dfs/search_CF.htm>`_. For example, I found Texans for Rick Perry's filing ID on `this page <http://www.ethics.state.tx.us/php/filer.php?acct=00015741>`_.
+The `Texas Ethics Commission <http://www.ethics.state.tx.us/index.html>`_, via the `campaign finance search form <http://www.ethics.state.tx.us/dfs/search_CF.htm>`_. For example, you can find Texans for Rick Perry filing IDs on `this page <http://www.ethics.state.tx.us/php/filer.php?acct=00015741>`_.

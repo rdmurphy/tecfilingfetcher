@@ -9,7 +9,7 @@ with open('LICENSE') as f:
 
 setup(
     name='tecfilingfetcher',
-    version='0.0.3',
+    version='0.1.0',
     description='A tool for processing raw filing files from the Texas Ethics Commission.',
     long_description=readme,
     author='Ryan Murphy',
