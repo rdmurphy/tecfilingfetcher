@@ -14,10 +14,7 @@ def prepare_rows(page):
     return csv.reader(page)
 
 
-def get_data(filing_id, type, basic=False, cli=False):
-    page = fetch_page(filing_id)
-    rows = prepare_rows(page)
-
+def get_data(filing_ids, type, basic=False, cli=False):
     row_list = []
 
     header_row = settings[type]['full_pull']['header']
@@ -28,13 +25,17 @@ def get_data(filing_id, type, basic=False, cli=False):
         header_row = settings[type]['basic_pull']['header']
         indexes = settings[type]['basic_pull']['indexes']
 
-    for row in rows:
-        if not row:
-            continue
+    for filing_id in filing_ids:
+        page = fetch_page(filing_id)
+        rows = prepare_rows(page)
 
-        if row[0] == type_code:
-            row = [row[x] for x in indexes]
-            row_list.append(row)
+        for row in rows:
+            if not row:
+                continue
+
+            if row[0] == type_code:
+                row = [row[x] for x in indexes]
+                row_list.append(row)
 
     if cli:
         write_to = csv.writer(sys.stdout)
@@ -49,21 +50,25 @@ def get_data(filing_id, type, basic=False, cli=False):
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('filing_id', help='TEC filing ID')
+    parser.add_argument('filing_ids',
+            metavar='filing_id',
+            help='The TEC filing ID(s) to fetch',
+            nargs='+')
     parser.add_argument('-t', '--type',
-                        help='The type of data you want to get',
-                        choices=['contributions', 'expenditures'])
+            help='The type of data you want to get',
+            choices=['contributions', 'expenditures'])
     parser.add_argument('-s', '--simple',
-                        help='Return just the basic fields, good if you just want numbers',
-                        action='store_true')
+            help='Returns only basic fields, good if you only want numbers',
+            action='store_true')
     args = parser.parse_args()
+    print args
 
     if not args.type:
         parser.error('No data type provided, please supply a --type')
 
     basic_status = args.simple
 
-    get_data(args.filing_id, args.type, basic_status, True)
+    get_data(args.filing_ids, args.type, basic_status, True)
 
 
 if __name__ == '__main__':
